@@ -1,14 +1,15 @@
-export default function Campo() {
+export default function Campo({label, id, type = "text"}) {
     return (
         <div className="form-group">
-            <label htmlFor="nome" className="form-label">
-                Nome:
+            <label htmlFor={id} 
+                className="form-label text-primary">
+                {label}:
             </label>
             <input
-                type="text"
-                id="nome"
-                name="nome"
-                className="form-control border border-dark shadow-sm"
+                type={type}
+                id={id}
+                name={id}
+                className="form-control border border-primary shadow-sm"
             />
         </div>
     );
