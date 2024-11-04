@@ -1,4 +1,4 @@
-export default function Campo({variant, label, id, type = "text"}) {
+export default function Campo({variant, label, id, type = "text", value, onChange}) {
     return (
         <div className="form-group">
             <label htmlFor={id} 
@@ -9,7 +9,9 @@ export default function Campo({variant, label, id, type = "text"}) {
                 type={type}
                 id={id}
                 name={id}
+                value={value}
                 className={`form-control border border-${variant} shadow-sm`}
+                onChange={onChange}
             />
         </div>
     );
