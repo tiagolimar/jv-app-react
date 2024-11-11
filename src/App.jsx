@@ -1,31 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Campo from './components/Campo.jsx';
 
 function App() {
     const [variant, setVariant] = useState('primary');
-    const [teste, setTeste] = useState('Seu primeiro nome');
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
 
     const handleColor = (event) => {
         const newVariant = event.target.value;
         setVariant(newVariant);
     }
 
-    const handleChange = (event) => {
-        const valor = event.target.value;
-        setTeste(valor);
-        console.log(valor);
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const formData = {
-            teste,
+            nome,
+            email,
+            senha,
         }
 
         console.log(formData);
     }
+
+    useEffect(()=>{
+        async function fetchData(){
+            const response = await fetch('https://viacep.com.br/ws/01001000/json/');
+            const data = await response.json();
+            console.log(data);
+        }
+        
+        fetchData();
+    },[]);
 
     return (
         <>
@@ -46,22 +54,32 @@ function App() {
                     </select>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="teste" 
-                        className={`form-label text-${variant}`}>
-                        Teste:
-                    </label>
-                    <input type="text" id="teste" name="teste"
-                        className={`form-control border border-${variant} shadow-sm`}
-                        value={teste}
-                        onChange={handleChange}
-                    />
-                </div>
+                <Campo
+                    variant={variant} 
+                    id="nome" 
+                    label="Nome" 
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
+                />
 
-                <Campo variant={variant} id="nome" label="Nome" value={nome} onChange={handleChange} />
-                <Campo variant={variant} id="email" label="Email" type="email" value={} onChange={handleChange}  />
-                <Campo variant={variant} id="senha" label="Senha" type="password" value={} onChange={handleChange}  />
-                
+                <Campo 
+                    variant={variant} 
+                    id="email" 
+                    label="Email" 
+                    type="email" 
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
+
+                <Campo
+                    variant={variant} 
+                    id="senha" 
+                    label="Senha" 
+                    type="password" 
+                    value={senha} 
+                    onChange={e => setSenha(e.target.value)}  
+                />
+
                 <button className={`btn btn-${variant} shadow-sm mb-4`}>Cadastrar</button>
 
             </form>
